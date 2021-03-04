@@ -1,0 +1,124 @@
+package Test;
+
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
+public class ShuoMing {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("欢迎使用新冠病毒检测流程！");
+        sc.nextLine();
+        System.out.print("1、将带有口腔拭子的棉棒装入离心管。");
+        sc.nextLine();
+        System.out.print("2、在EP管中加入20μL的蛋白酶K（PTK）与400μL的GL裂解液。");
+        sc.nextLine();
+        System.out.print("3、振荡15s，离心。");
+        sc.nextLine();
+        System.out.print("4、56℃环境下加热10min后取出。");
+        sc.nextLine();
+        System.out.print("5、加入400μL的无水乙醇。");
+        sc.nextLine();
+        System.out.print("6、振荡15s，离心。");
+        sc.nextLine();
+        System.out.print("7、将EP管中700μL的样本加入层析柱中。");
+        sc.nextLine();
+        System.out.print("8、将所得样品在12000rpm下，离心1min。");
+        sc.nextLine();
+        System.out.print("9、将收集管中废液除去。");
+        sc.nextLine();
+        System.out.print("10、加入500μL的GW1。");
+        sc.nextLine();
+        System.out.print("11、将所得样品在12000rpm下，离心1min。");
+        sc.nextLine();
+        System.out.print("12、将收集管中废液除去。");
+        sc.nextLine();
+        System.out.print("13、加入500μL的GW2。");
+        sc.nextLine();
+        System.out.print("14、将所得样品在12000rpm下，离心3min。");
+        sc.nextLine();
+        System.out.print("15、将收集管中废液除去。");
+        sc.nextLine();
+        System.out.print("16、可根据DNA的需求，重复13-15步，提取更纯的DNA。");
+        sc.nextLine();
+        System.out.print("17、将所得样品在12000rpm下，离心1min。");
+        sc.nextLine();
+        System.out.print("18、在室温下静置5-10min。");
+        sc.nextLine();
+        System.out.print("19、在层析柱中央滴加50μL的GE。");
+        sc.nextLine();
+        System.out.print("20、在室温下静置5min。");
+        sc.nextLine();
+        System.out.print("21、将层析柱放入结果管中。");
+        sc.nextLine();
+        System.out.print("22、将所得样品在12000rpm下，离心1min。");
+        sc.nextLine();
+        System.out.print("23、将层析柱丢弃。");
+        sc.nextLine();
+        System.out.print("24、吸光度测试，请输入样本是否合格（y或n）：");
+        int j = 0;
+        while (j == 0) {
+            String judge = sc.nextLine();
+            if (judge.equals("y") || judge.equals("Y")) {
+                System.out.print("25、样本合格，计算稀释倍数。请输入OD260数值（取值范围为[0.1,1.0]）：");
+                int i = 0;
+                double od = 0;
+                while (i == 0){
+                    od = sc.nextDouble();
+                    if (od >= 0.1 && od <= 1)
+                        i++;
+                    else
+                        System.out.print("输入有误，请重新输入：");
+                }
+                double equal = dilute(od);
+                DecimalFormat df = new DecimalFormat("#.00");
+                System.out.println("稀释倍数为：" + equal + "，加入水量：" + df.format(equal*50) +"μL");
+                sc.nextLine();
+                System.out.print("26、将稀释好的DNA取20μL到新的EP管中。");
+                sc.nextLine();
+                System.out.print("27、在装有20μL的DNA的EP管中加入30μL的PCR混合液。");
+                sc.nextLine();
+                System.out.print("28、将含有PCR混合液和DNA的EP管放置在PCR仪器上。");
+                sc.nextLine();
+                System.out.print("29、设置PCR程序：50℃30min；95℃1min；95℃15s，60℃30s，此步骤循环共计45次；25℃10s；最终保持4℃。");
+                sc.nextLine();
+                System.out.print("30、65min后取下PCR产物。");
+                sc.nextLine();
+                System.out.print("31、将PCR后产物上机读取Ct（荧光强度）值，请输入Ct值：");
+                while (true) {
+                    double ct = sc.nextDouble();
+                    if (ct == 40) {
+                        System.out.println("此样本新冠病毒检测为阴性。");
+                        break;
+                    }
+                    else if (ct <= 37) {
+                        System.out.println("此样本新冠病毒检测为阳性，建议隔离此样本的患者。");
+                        break;
+                    }
+                    else if (ct > 37 && ct < 40) {
+                        System.out.println("此样本结果为疑似样本，建议再次采样测试。");
+                        break;
+                    }
+                    else if (ct > 40) {
+                        System.out.println("输入有误，请重新输入");
+                        break;
+                    }
+                }
+                j++;
+            } else if (judge.equals("n") || judge.equals("N")) {
+                System.out.println("25、样本不合格，请重新采样（tips：注意无菌采样）。");
+                j++;
+            } else {
+                System.out.print("输入有误，请重新输入:");
+            }
+        }
+        sc.close();
+    }
+
+    public static double dilute(double OD260){
+        //计算稀释倍数
+        double y;
+        y = 7 / ( 50 * OD260);
+        return y;
+    }
+
+}
