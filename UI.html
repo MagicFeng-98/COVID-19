@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新冠病毒检测流程</title>
+</head>
+<body>
+    <h2 align="center">欢迎使用新冠病毒检测流程</h2>
+    <hr color="green" size="4px">
+    <ol>
+        <li>将带有口腔拭子的棉棒装入离心管。</li>
+        <li>在EP管中加入20μL的蛋白酶K（PTK）与400μL的GL裂解液。</li>
+        <li>振荡15s，离心。</li>
+        <li>56℃环境下加热10min后取出。</li>
+        <li>加入400μL的无水乙醇。</li>
+        <li>振荡15s，离心。</li>
+        <li>将EP管中700μL的样本加入层析柱中。</li>
+        <li>将所得样品在12000rpm下，离心1min。</li>
+        <li>将收集管中废液除去。</li>
+        <li>加入500μL的GW1。</li>
+        <li>将所得样品在12000rpm下，离心1min。</li>
+        <li>将收集管中废液除去。</li>
+        <li>加入500μL的GW2。</li>
+        <li>将所得样品在12000rpm下，离心3min。</li>
+        <li>将收集管中废液除去。</li>
+        <li>可根据DNA的需求，重复13-15步，提取更纯的DNA。</li>
+        <li>将所得样品在12000rpm下，离心1min。</li>
+        <li>在室温下静置5-10min。</li>
+        <li>在层析柱中央滴加50μL的GE。</li>
+        <li>在室温下静置5min。</li>
+        <li>将层析柱放入结果管中。</li>
+        <li>将所得样品在12000rpm下，离心1min。</li>
+        <li>将层析柱丢弃。</li>
+        <li>吸光度测试，人工检测样本是否合格。若样本不合格，请重新采样（tips：注意无菌采样）。</li>
+        <li>样本合格，计算稀释倍数。请输入OD260数值（取值范围为[0.1,1.0]）：<input type="text" value="" id="beishu"><button onclick="getText()">确认</button></li>
+        <li>将稀释好的DNA取20μL到新的EP管中。</li>
+        <li>在装有20μL的DNA的EP管中加入30μL的PCR混合液。</li>
+        <li>将含有PCR混合液和DNA的EP管放置在PCR仪器上。</li>
+        <li>设置PCR程序：50℃30min；95℃1min；95℃15s，60℃30s，此步骤循环共计45次；25℃10s；最终保持4℃。</li>
+        <li>65min后取下PCR产物。</li>
+        <li>将PCR后产物上机读取Ct（荧光强度）值，请输入Ct值：<input type="text" value="" id="ct"><button onclick="judge()">确认</button></li>
+    </ol>
+    <p>如发现样本新冠病毒检测为阳性，请访问<a href="http://www.chinacdc.cn/" target="_blank">中国疾控中心</a>进行申报。</p>
+    <script type="text/javascript">
+        function getText(){
+            var id=document.getElementById('beishu').value;
+            alert("稀释倍数为："+id+"，加入水量："+id*50+"μL。");
+        }
+    </script>
+    <script type="text/javascript">
+        function judge(){
+            var id=Number(document.getElementById('ct').value);
+            if(id<=37)
+                alert("此样本新冠病毒检测为阳性，建议隔离此样本的患者。");
+            else if(id>37 && ct<40)
+                alert("此样本结果为疑似样本，建议再次采样测试。");
+            else if(id == 40)
+                alert("此样本新冠病毒检测为阴性。");
+            else
+                alert("输入有误，请重新输入！");
+        }
+    </script>
+</body>
+</html>
